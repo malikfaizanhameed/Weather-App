@@ -42,6 +42,7 @@ form.addEventListener("submit", async e => {
     
         li.innerHTML = markup;
         list.appendChild(li);
+        console.log(list);
 
         msg.textContent = "";
         form.reset();
