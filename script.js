@@ -22,45 +22,77 @@ form.addEventListener("submit", async e => {
         const resp = await fetch(url);
         const data = await resp.json();
         
+        createList(data);
         //Destructuring data
-        const {main, sys, weather, name} = data;
+        // const {main, sys, weather, name} = data;
     
         //setting icon
-        const icon = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
+        // const icon = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
         
         //Create html markup
-        const markup = `
-            <h2 class="city-name" data-name="${name},${sys.country}">
-                <span>${name}</span>
-                <sup>${sys.country}</sup>
-            </h2>
-            <div class="city-temp">${Math.round(main.temp)}<sup>°C</sup></div>
-            <figure>
-                <img class="city-icon" src="${icon}" alt="${
-                weather[0].description}">
-                <figcaption>${weather[0].description}</figcaption>
-            </figure>`;
+        // const markup = `
+        //     <h2 class="city-name" data-name="${name},${sys.country}">
+        //         <span>${name}</span>
+        //         <sup>${sys.country}</sup>
+        //     </h2>
+        //     <div class="city-temp">${Math.round(main.temp)}<sup>°C</sup></div>
+        //     <figure>
+        //         <img class="city-icon" src="${icon}" alt="${
+        //         weather[0].description}">
+        //         <figcaption>${weather[0].description}</figcaption>
+        //     </figure>`;
                 
         //creating li element
-        const li = document.createElement("li");
+        // const li = document.createElement("li");
         
         //giving class name to list
-        li.classList.add("city");
+        // li.classList.add("city");
     
         //adding to the list
-        li.innerHTML = markup;
-        list.appendChild(li);
+        // li.innerHTML = markup;
+        // list.appendChild(li);
         
         //reset to original state
-        msg.textContent = "";
-        form.reset();
-        input.focus();
+        reset(' ');
+        // msg.textContent = "";
+        // form.reset();
+        // input.focus();
         
         //error case
     } catch {
         //reset with error message
-        msg.textContent = "Please enter a valid city name!";
-        form.reset();
-        input.focus();
+        reset('Please enter a valid city name!');
+        // msg.textContent = "Please enter a valid city name!";
+        // form.reset();
+        // input.focus();
     };
 });
+function reset(message){
+    msg.textContent = message;
+    form.reset();
+    input.focus();
+}
+function createList(data){
+    const {main, sys, weather, name} = data;
+
+    const icon = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
+
+    const markup = `
+    <h2 class="city-name" data-name="${name},${sys.country}">
+        <span>${name}</span>
+        <sup>${sys.country}</sup>
+    </h2>
+    <div class="city-temp">${Math.round(main.temp)}<sup>°C</sup></div>
+    <figure>
+        <img class="city-icon" src="${icon}" alt="${
+        weather[0].description}">
+        <figcaption>${weather[0].description}</figcaption>
+    </figure>`;
+
+    const li = document.createElement("li");
+
+    li.classList.add("city");
+
+    li.innerHTML = markup;
+    list.appendChild(li);
+}
