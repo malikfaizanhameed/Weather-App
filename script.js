@@ -41,27 +41,26 @@ form.addEventListener("submit", async e => {
                 <figcaption>${weather[0].description}</figcaption>
             </figure>`;
                 
-        // debugger;
         //creating li element
         const li = document.createElement("li");
+        
+        //giving class name to list
         li.classList.add("city");
     
+        //adding to the list
         li.innerHTML = markup;
         list.appendChild(li);
-        console.log(list);
-
+        
         //reset to original state
         msg.textContent = "";
         form.reset();
         input.focus();
-
+        
+        //error case
     } catch {
-
+        //reset with error message
         msg.textContent = "Please enter a valid city name!";
         form.reset();
         input.focus();
     };
-
-
-
 });
