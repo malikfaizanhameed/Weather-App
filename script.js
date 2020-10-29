@@ -1,29 +1,34 @@
+// Selecting HTML elements
 const form = document.querySelector(".top-banner form");
 const input = document.querySelector(".top-banner input");
 const msg = document.querySelector(".top-banner .msg");
 const list = document.querySelector(".ajax-section .cities");
 
-
+// API Key
 const apiKey = 'f84009647ce2a9db9dcff46b58632a4b';
 
-
-// api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-// f84009647ce2a9db9dcff46b58632a4b
-
+//Adding Event Listener
 form.addEventListener("submit", async e => {
+    
+    //Prevent Default Behavior
     e.preventDefault();
+
+    //try to ask openweather for data
     try {
         const inputVal = input.value;
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&units=metric&appid=${apiKey}`;
-        // debugger;
         
+        //wait for response and convert into JSON format
         const resp = await fetch(url);
         const data = await resp.json();
         
+        //Destructuring data
         const {main, sys, weather, name} = data;
     
+        //setting icon
         const icon = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
-    
+        
+        //Create html markup
         const markup = `
             <h2 class="city-name" data-name="${name},${sys.country}">
                 <span>${name}</span>
@@ -37,6 +42,7 @@ form.addEventListener("submit", async e => {
             </figure>`;
                 
         // debugger;
+        //creating li element
         const li = document.createElement("li");
         li.classList.add("city");
     
@@ -44,11 +50,13 @@ form.addEventListener("submit", async e => {
         list.appendChild(li);
         console.log(list);
 
+        //reset to original state
         msg.textContent = "";
         form.reset();
         input.focus();
 
     } catch {
+
         msg.textContent = "Please enter a valid city name!";
         form.reset();
         input.focus();
